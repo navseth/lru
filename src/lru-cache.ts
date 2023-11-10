@@ -74,8 +74,8 @@ export default class LRUCache<T> {
     // The node doesn't exist and we are at capacity. Let's remove the tail.
     // Let's also remove it from the cache
     else if (isAtCapacity && this.tail != null) {
-      this.removeNode(this.tail);
       delete this.cache[this.tail.key];
+      this.removeNode(this.tail);
       this.size--;
     }
 
