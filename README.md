@@ -10,7 +10,7 @@ It is important to note that the LRU Cache has a capacity limit. Whenever we rea
 
 # Typescript
 
-To make my implementation a bit more flexible and extensible by using Typescript Generics. The value `T` represents the type of data you want to store in the cache. An example on how you can create the LRUCache for a certain type you can do the following:
+To make my implementation a bit more flexible and extensible I've leveraged Typescript Generics. By using Typescript Generics, I'm able to grant the consumer a bit more flexibility in what data type they would like to store in the cache. This can range from primitive types all the way to custom object types. This is done by specifying the value of `T`. An example is shown below that illustrates how to use this cache to store an object with an `id` and `firstName` property.
 
 ```@javascript
 import { LRUCache } from '..';
