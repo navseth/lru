@@ -1,5 +1,15 @@
-class DoubleLinkedListNode {
-  constructor(key, value, next = null, prev = null) {
+class DoubleLinkedListNode<T> {
+  key;
+  value;
+  next;
+  prev;
+
+  constructor(
+    key: string,
+    value: T,
+    next: DoubleLinkedListNode<T> | null = null,
+    prev: DoubleLinkedListNode<T> | null = null
+  ) {
     this.key = key;
     this.value = value;
     this.next = next;
@@ -7,8 +17,14 @@ class DoubleLinkedListNode {
   }
 }
 
-class LRUCache {
-  constructor(capacity) {
+export default class LRUCache<T> {
+  size: number;
+  capacity: number;
+  cache: { [key: string]: DoubleLinkedListNode<T> };
+  head: DoubleLinkedListNode<T> | null;
+  tail: DoubleLinkedListNode<T> | null;
+
+  constructor(capacity: number) {
     this.size = 0;
     this.capacity = capacity;
     this.cache = {};
@@ -22,7 +38,7 @@ class LRUCache {
         so that we can update the Least Recently Used (LRU) item. 
         Then return the value.     
     */
-  get(key) {
+  get(key: string) {
     const existingNode = this.cache[key];
     if (existingNode) {
       const value = existingNode.value;
@@ -43,7 +59,7 @@ class LRUCache {
           (ie: tail) and then add the new key/value to the front of the list because it now becomes the Most
           Recently Used (MRU).  s
     */
-  set(key, value) {
+  set(key: string, value: T) {
     const existingNode = this.cache[key];
     const isAtCapacity = this.size === this.capacity;
 
@@ -57,7 +73,7 @@ class LRUCache {
     }
     // The node doesn't exist and we are at capacity. Let's remove the tail.
     // Let's also remove it from the cache
-    else if (isAtCapacity) {
+    else if (isAtCapacity && this.tail != null) {
       this.removeNode(this.tail);
       delete this.cache[this.tail.key];
       this.size--;
@@ -81,14 +97,14 @@ class LRUCache {
   }
 
   // Helper method to remove a node from the double linked list.
-  removeNode(node) {
-    if (node.prev !== null) {
+  removeNode(node: DoubleLinkedListNode<T>) {
+    if (node.prev !== null && node.next) {
       node.next.prev == node.next;
     } else {
       this.head = node.next;
     }
 
-    if (node.next !== null) {
+    if (node.next !== null && node.prev) {
       node.prev.next = node.prev;
     } else {
       this.tail = node.prev;
