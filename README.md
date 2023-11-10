@@ -20,4 +20,4 @@ const myObjectLRUCache = new LRUCache<{id: number; firstName: string;}>(3);
 
 # Unit Testing
 
-To ensure completeness with my implementation, I have also added unit tests. These tests were written with Jest and can be found in the `__tests__`.
+To ensure completeness with my implementation, I have also added unit tests. These tests were written with Jest and can be found in the `__tests__` folder.
