@@ -38,13 +38,14 @@ export default class LRUCache<T> {
         so that we can update the Least Recently Used (LRU) item. 
         Then return the value.     
     */
-  get(key: string) {
+  get(key: string): T | -1 {
     const existingNode = this.cache[key];
     if (existingNode) {
       const value = existingNode.value;
       if (this.head !== existingNode) {
         this.set(key, value);
       }
+      return value;
     }
     return -1;
   }
@@ -85,7 +86,7 @@ export default class LRUCache<T> {
 
     // The list is empty so we are adding the first item.
     if (!this.head) {
-      this.head = this.tail = new DoubleLinkedListNode(key, value);
+      this.head = this.tail = new DoubleLinkedListNode<T>(key, value);
     } else {
       const newNode = new DoubleLinkedListNode(key, value, this.head);
       this.head.prev = newNode;
@@ -96,16 +97,24 @@ export default class LRUCache<T> {
     this.size++;
   }
 
+  getMostRecentlyUsed() {
+    return this.head?.value;
+  }
+
+  getLeastRecentlyUsed() {
+    return this.tail?.value;
+  }
+
   // Helper method to remove a node from the double linked list.
   removeNode(node: DoubleLinkedListNode<T>) {
-    if (node.prev !== null && node.next) {
-      node.next.prev == node.next;
+    if (node.prev !== null) {
+      node.prev.next = node.next;
     } else {
       this.head = node.next;
     }
 
-    if (node.next !== null && node.prev) {
-      node.prev.next = node.prev;
+    if (node.next !== null) {
+      node.next.prev = node.prev;
     } else {
       this.tail = node.prev;
     }
